@@ -146,14 +146,21 @@ class mod_congrea_mod_form extends moodleform_mod {
                 $mform->setDefault('qaupvote', 0);
             }
             $mform->disabledIf('qaupvote', 'askquestion', 'notchecked');
-            // Congrea recording settings.
-            $mform->addElement('header', 'general', get_string('recordingsection', 'congrea'));
+             // Congrea recording and attendance settings.
+            $mform->addElement('header', 'general', get_string('recordingattendancesection', 'congrea'));
             $mform->addElement('advcheckbox', 'enablerecording', get_string('cgrecording', 'congrea'), ' ', null); // Enablerecording.
-            $mform->addHelpButton('enablerecording', 'cgrecording', 'congrea');
+            $mform->addHelpButton('enablerecording', 'cgrecording', 'congrea');            
             if (get_config('mod_congrea', 'enablerecording')) {
                 $mform->setDefault('enablerecording', 1);
             } else {
                 $mform->setDefault('enablerecording', 0);
+            }
+            $mform->addElement('advcheckbox', 'enableattendance', get_string('cgattendance', 'congrea'), ' ', null); // Enableattendance.
+            $mform->addHelpButton('enableattendance', 'cgattendance', 'congrea');
+            if (get_config('mod_congrea', 'enableattendance')) {
+                $mform->setDefault('enableattendance', 1);
+            } else {
+                $mform->setDefault('enableattendance', 0);
             }
             // Allow presentor to control A/V recording (button in live session.
             $mform->addElement('advcheckbox', 'recallowpresentoravcontrol',
@@ -230,6 +237,7 @@ class mod_congrea_mod_form extends moodleform_mod {
             $mform->disabledIf('trimrecordings', 'enablerecording', 'notchecked');
         }
         $this->standard_coursemodule_elements();
+        $this->apply_admin_defaults();
         // Add standard buttons, common to all modules.
         $this->add_action_buttons();
     }

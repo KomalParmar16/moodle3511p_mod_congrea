@@ -766,6 +766,7 @@ function settingstohex($variablesobject) {
     $localsettings[17] = $variablesobject->qacomment;
     $localsettings[18] = $variablesobject->qaupvote;
     $localsettings[19] = $variablesobject->x6;
+    $localsettings[20] = $variablesobject->enableattendance;
     return binarytohex(join('', $localsettings));
 }
 

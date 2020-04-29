@@ -294,6 +294,7 @@ if (get_config('mod_congrea', 'allowoverride')) { // If override on.
     // Recording Settings.
     if ($congrea->enablerecording) { // If enable recording.
         $enablerecording = $congrea->enablerecording;
+        $enableattendance = $congrea->enableattendance;
         $recallowpresentoravcontrol = $congrea->recallowpresentoravcontrol;
         $showpresentorrecordingstatus = $congrea->showpresentorrecordingstatus;
         $attendeerecording = $congrea->attendeerecording;
@@ -303,6 +304,7 @@ if (get_config('mod_congrea', 'allowoverride')) { // If override on.
         $trimrecordings = $congrea->trimrecordings;
     } else {
         $enablerecording = 0;
+        $enableattendance = 1;
         $recallowpresentoravcontrol = 0;
         $showpresentorrecordingstatus = 0;
         $attendeerecording = 0;
@@ -327,6 +329,12 @@ if (get_config('mod_congrea', 'allowoverride')) { // If override on.
 
     if (get_config('mod_congrea', 'enablerecording')) {
         $enablerecording = get_config('mod_congrea', 'enablerecording');
+        $enableattendance = get_config('mod_conmgrea', 'enableattendance');
+        if ($enableattendance) {
+            $attendancestatus = 1;
+        } else {
+            $attendancestatus = get_config('mod_congrea', 'enableattendance');
+        }
         $recallowpresentoravcontrol = get_config('mod_congrea', 'recAllowpresentorAVcontrol');
         if ($recallowpresentoravcontrol) {
             $showpresentorrecordingstatus = 1;
@@ -383,7 +391,8 @@ $variableobject = (object) array(
     'qamarknotes' => $qamarknotes,
     'qaanswer' => $qaanswer,
     'qacomment' => $qacomment,
-    'qaupvote' => $qaupvote, 'x6' => 0
+    'qaupvote' => $qaupvote, 'x6' => 0, 
+    'enableattendance' => $enableattendance
 );
 $hexcode = settingstohex($variableobject); // Todo- for validation.
 if ($psession) {

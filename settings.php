@@ -53,6 +53,7 @@ if ($ADMIN->fulltree) {
                 . ", " . ($plandetails->recording ? "with" : "without") . " recording.";
                 if (!$plandetails->recording) {
                     set_config('enablerecording', 0, 'mod_congrea');
+                    set_config('enableattendance', 1, 'mod_congrea');
                 }
             }
         }
@@ -116,12 +117,21 @@ if ($ADMIN->fulltree) {
     // Congrea Voting default on.
     $settings->add(new admin_setting_configcheckbox('mod_congrea/qaUpvote', get_string('qaUpvote', 'mod_congrea'),
                                                       get_string('qaUpvote_help', 'mod_congrea'), 1));
-    // Recordings Section.
-    $settings->add(new admin_setting_heading('mod_congrea/recording_header', get_string('recordingsection', 'congrea'), ''));
+    // Recordings and Attendance Section.
+    $settings->add(new admin_setting_heading('mod_congrea/recordingattendance_header', get_string('recordingattendancesection', 'congrea'), ''));
     // Congrea recording default off.
-    $settings->add(new admin_setting_configcheckbox('mod_congrea/enablerecording',
+    $setting = new admin_setting_configcheckbox('mod_congrea/enablerecording',
                                                         get_string('enablerecording', 'congrea'),
-                                                        get_string('enablerecording_help', 'congrea'), 0));
+                                                        get_string('enablerecording_help', 'congrea'), 0);
+
+    $setting->set_locked_flag_options(admin_setting_flag::ENABLED, true);
+    $settings->add($setting);
+    // Congrea attendance default on.
+    $setting = new admin_setting_configcheckbox('mod_congrea/enableattendance', 
+                                                        get_string('enableattendance', 'congrea'),
+                                                        get_string('enableattendance_help', 'congrea'),1);   
+    $setting->set_locked_flag_options(admin_setting_flag::ENABLED, true);
+    $settings->add($setting);                  
     // Session recording for teacher.
     $settings->add(new admin_setting_heading('mod_congrea/trecording_header',
     get_string('trecordingsection', 'congrea'), ''));

@@ -196,7 +196,7 @@ function xmldb_congrea_upgrade($oldversion) {
         }
         upgrade_mod_savepoint(true, 2019042200, 'congrea');
     }
-    if ($oldversion < 2019060700) {
+    if ($oldversion < 2019060800) {
         $table = new xmldb_table('congrea');
         // Add disable attendee audio field Default 0.
         $field = new xmldb_field(
@@ -363,6 +363,21 @@ function xmldb_congrea_upgrade($oldversion) {
         }
         // Main savepoint reached.
         upgrade_mod_savepoint(true, 2020021900, 'congrea');
+    }
+    
+    if ($oldversion < 2020042900) {
+
+        // Define field enableattendance to be added to congrea.
+        $table = new xmldb_table('congrea');
+        $field = new xmldb_field('enableattendance', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '1', 'enablerecording');
+
+        // Conditionally launch add field enableattendance.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Congrea savepoint reached.
+        upgrade_mod_savepoint(true, 2020042900, 'congrea');
     }
     return true;
 }
